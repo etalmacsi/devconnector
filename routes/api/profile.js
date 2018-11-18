@@ -6,6 +6,8 @@ const passport = require("passport");
 //load validation
 
 const validateProfileInput = require("../../validation/profile");
+const validateExpInput = require("../../validation/experience");
+const validateEducationInput = require("../../validation/education");
 
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
@@ -151,6 +153,74 @@ router.post(
           new Profile(profileFields).save().then(profile => res.json(profile));
         });
       }
+    });
+  }
+);
+
+//@route    POST api/profile/experience
+//@desc     add experience to profile
+//@acces    private
+
+router.post(
+  "/experience",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateExpInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      const newExp = {
+        title: req.body.title,
+        company: req.body.company,
+        location: req.body.location,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description
+      };
+
+      // add to experience array
+
+      profile.experience.unshift(newExp);
+
+      profile.save().then(profile => res.json(profile));
+    });
+  }
+);
+
+//@route    POST api/profile/education
+//@desc     add education to profile
+//@acces    private
+
+router.post(
+  "/education",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateEducationInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      const newEdu = {
+        school: req.body.school,
+        degree: req.body.degree,
+        fieldofstudy: req.body.fieldofstudy,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description
+      };
+
+      // add to experience array
+
+      profile.education.unshift(newEdu);
+
+      profile.save().then(profile => res.json(profile));
     });
   }
 );
