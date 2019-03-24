@@ -37,7 +37,7 @@ class Dashboard extends Component {
     }
 
     return (
-      <div clasName="dashboard">
+      <div className="dashboard">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
