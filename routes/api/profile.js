@@ -118,8 +118,8 @@ router.post(
     if (req.body.location) profileField.location = req.body.location;
     if (req.body.bio) profileField.bio = req.body.bio;
     if (req.body.status) profileField.status = req.body.status;
-    if (req.body.guthubusername)
-      profileField.guthubusername = req.body.guthubusername;
+    if (req.body.githubusername)
+      profileField.githubusername = req.body.githubusername;
     // Skills
     if (typeof req.body.skills !== "undefined") {
       profileField.skills = req.body.skills.split(",");
