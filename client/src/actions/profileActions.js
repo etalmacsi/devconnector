@@ -28,7 +28,7 @@ export const getCurrentProfile = () => dispatch => {
 };
 
 //get profile by handle
-export const getProfilebyHandle = handle => dispatch => {
+export const getProfileByHandle = handle => dispatch => {
   dispatch(setProfileLoading());
   axios
     .get(`/api/profile/handle/${handle}`)
